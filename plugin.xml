@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:rim="http://www.blackberry.com/ns/widgets"
+    id="com.lwz.cordova.UmengAnalyticsEventPlugin"
+    version="0.0.1">
+    <name>AnalyticsPlugin</name>
+    <description>Umeng AnalyticsEvent Cordova plugin</description>
+
+    <js-module src="www/analyticsPlugin.js" name="AnalyticsPlugin">
+        <clobbers target="window.plugins.analyticsPlugin" />
+    </js-module>
+
+    <!-- ios -->
+    <platform name="ios">
+        <config-file target="config.xml" parent="/*">
+            <feature name="AnalyticsPlugin">
+                <param name="ios-package" value="AnalyticsPlugin"/>
+            </feature>
+        </config-file>
+        <header-file src="src/ios/MobClick.h" target-dir="src/ios"/>
+        <source-file src="src/ios/libMobClickLibrary.a" framework="true"/>
+        <header-file src="src/ios/UmengAnalyticsPlugin.h" />
+        <source-file src="src/ios/UmengAnalyticsPlugin.m" />
+        <framework src="libz.dylib" weak="true"/>
+    </platform>
+
+    <!-- android -->
+    <platform name="android">
+    		<config-file target="res/xml/config.xml" parent="/*">
+    			<feature name="AnalyticsPlugin">
+                <param name="android-package" value="com.lwz.UmengAnalyticsEventPlugin.AnalyticsPlugin"/>
+            </feature>
+    		</config-file>
+
+        <config-file target="AndroidManifest.xml" parent="/manifest">
+        	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+            <uses-permission android:name="android.permission.INTERNET"/>
+            <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+            <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+        </config-file>
+
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+        	<meta-data android:name="UMENG_CHANNEL" android:value="360"/>
+            <meta-data android:name="UMENG_APPKEY" android:value="561b097ce0f55ad2890039bb"/>
+        </config-file>
+
+    	<source-file src="src/android/umeng-analytics-v5.5.2.jar" target-dir="libs" />
+        <source-file src="src/android/AnalyticsPlugin.java" target-dir="src/com/lwz/UmengAnalyticsEventPlugin" />
+
+    </platform>
+</plugin>
